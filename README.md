@@ -13,6 +13,7 @@ This project is a React client developed with TypeScript and Vite. It uses vario
 - [**React Router**](https://reactrouter.com/): Library for routing in React applications.
 - [**ESLint**](https://eslint.org/): Linting tool to identify and fix problems in the code.
 - [**Prettier**](https://prettier.io/): Code formatting tool.
+- [**Jest**](https://jestjs.io/): Handle Unit tests 
 
 ## Project Structure
 ```
