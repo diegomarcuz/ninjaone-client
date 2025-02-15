@@ -4,8 +4,8 @@ import { Search, Refresh, Add } from "@mui/icons-material"
 import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from "react-router";
 
-import AddDeviceModal from './components/AddDeviceModal';
-import { Device } from './types/device';
+import AddModal from './components/AddModal';
+import { Device, DeviceType, DEVICES_QUERY_KEY, DeviceTypeValuePlusAll } from './constants/device';
 import EditModal from './components/EditModal';
 import DeleteModal from './components/DeleteModal';
 import Table from './components/Table';
@@ -14,18 +14,18 @@ import Table from './components/Table';
 const DeviceList: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient()
-  const search = searchParams.get("search") || ''
-  const deviceType = searchParams.get("deviceType") || "all"
-  const sortBy = searchParams.get("sortBy") || "desc"
+  const search = searchParams.get("search")
+  const type = searchParams.get("type")
+  const sortBy = searchParams.get("sortBy")
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [editDevice, setEditDevice] = useState<Device | null>(null)
   const [deleteDevice, setDeleteDevice] = useState<Device | null>(null)
-
+  
 
   const handleDeviceTypeChange = (event: SelectChangeEvent) => {
     setSearchParams(prevSearchParams => {
-      prevSearchParams.set("deviceType", event.target.value)
+      prevSearchParams.set("type", event.target.value)
       return prevSearchParams;
     }, {
       preventScrollReset: true,
@@ -68,7 +68,7 @@ const DeviceList: React.FC = () => {
           <TextField
             size="small"
             placeholder="Search"
-            value={search}
+            value={search || ''}
             onChange={handleSearch}
             slotProps={{
               input: {
@@ -81,25 +81,25 @@ const DeviceList: React.FC = () => {
 
           <FormControl sx={{ flexGrow: 0.1 }}>
             <InputLabel>Device Type</InputLabel>
-            <Select value={deviceType} label="Device Type" onChange={handleDeviceTypeChange} sx={{ height: 40 }}>
-              <MenuItem value="all">All</MenuItem>
-              <MenuItem value="windows">Windows workstation</MenuItem>
-              <MenuItem value="mac">Mac workstation</MenuItem>
-              <MenuItem value="linux">Linux workstation</MenuItem>
+            <Select value={type || "ALL"} label="Device Type" onChange={handleDeviceTypeChange} sx={{ height: 40 }}>
+              <MenuItem value={DeviceTypeValuePlusAll.ALL}>All</MenuItem>
+              <MenuItem value={DeviceTypeValuePlusAll.WINDOWS}>{DeviceType.WINDOWS}</MenuItem>
+              <MenuItem value={DeviceTypeValuePlusAll.MAC}>{DeviceType.MAC}</MenuItem>
+              <MenuItem value={DeviceTypeValuePlusAll.LINUX}>{DeviceType.LINUX}</MenuItem>
             </Select>
           </FormControl>
 
 
           <FormControl sx={{ flexGrow: 0.1 }}>
             <InputLabel>Sort by</InputLabel>
-            <Select value={sortBy} label="Sort by" onChange={handleSortByChange} sx={{ height: 40 }}>
+            <Select value={sortBy || "desc"} label="Sort by" onChange={handleSortByChange} sx={{ height: 40 }}>
               <MenuItem value="desc">HDD Capacity (Descending)</MenuItem>
               <MenuItem value="asc">HDD Capacity (Ascending)</MenuItem>
             </Select>
           </FormControl>
         </Box>
 
-        <IconButton onClick={async () => await queryClient.invalidateQueries({ queryKey: ["devices"] })}>
+        <IconButton onClick={async () => await queryClient.invalidateQueries({ queryKey: [DEVICES_QUERY_KEY] })}>
           <Refresh />
         </IconButton>
       </Box>
@@ -108,7 +108,7 @@ const DeviceList: React.FC = () => {
       <Table setDeleteDevice={setDeleteDevice} setEditDevice={setEditDevice} />
 
 
-      <AddDeviceModal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />
+      <AddModal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} />
 
       {editDevice && (
         <EditModal
