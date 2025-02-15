@@ -1,13 +1,13 @@
-import { Select as SelectMUI, Typography, type SelectProps } from '@mui/material';
+import { Select as SelectMUI, Typography, type SelectProps as SelectMuiProps } from '@mui/material';
 import {
     useController,
     type UseControllerProps,
     type FieldValues,
 } from 'react-hook-form';
 
-export interface DropdownRHFProps<FormValue extends FieldValues>
+export interface SelectProps<FormValue extends FieldValues>
     extends Omit<
-        SelectProps,
+        SelectMuiProps,
         | 'disabled'
         | 'id'
         | 'onChange'
@@ -18,25 +18,24 @@ export interface DropdownRHFProps<FormValue extends FieldValues>
 
 export const Select = <FormValue extends FieldValues>({
     children,
-    label,
     formProps,
     ...rest
-}: DropdownRHFProps<FormValue>) => {
+}: SelectProps<FormValue>) => {
     const {
         field: { value, onChange, name, disabled },
         fieldState: { error },
     } = useController<FormValue>(formProps);
 
     return (
-        <div className="dropdown-rhf">
+        <div>
             <SelectMUI
+                variant='outlined'
                 {...rest}
-                label={label}
                 id={name}
                 value={value}
                 onChange={onChange}
-                error={!!error}
                 disabled={disabled}
+                error={!!error}
             >
                 {children}
             </SelectMUI>

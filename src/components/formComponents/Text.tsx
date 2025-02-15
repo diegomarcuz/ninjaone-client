@@ -28,7 +28,6 @@ export const Text = <FormValue extends FieldValues>({
     return (
         <TextField
             {...rest}
-            className="textfield"
             id={name}
             disabled={disabled}
             value={value}
