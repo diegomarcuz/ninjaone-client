@@ -1,4 +1,7 @@
 node_modules/
 .vite/
-deps
-public
+deps/
+public/
+jest.config.js
+dist/
+coverage
