@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Table as TableMui, TableBody, TableCell, TableHead, TableRow, IconButton, Box, Typography } from '@mui/material';
 import { Computer, Apple, Terminal, Edit, Delete } from "@mui/icons-material"
 import {
@@ -8,12 +8,11 @@ import {
     getFilteredRowModel,
     createColumnHelper,
     flexRender,
-    sortingFns,
-    FilterFn
+    type FilterFn
 } from "@tanstack/react-table"
 import { useSearchParams } from 'react-router';
 import {
-    RankingInfo,
+    type RankingInfo,
     rankItem,
 } from '@tanstack/match-sorter-utils'
 
@@ -42,7 +41,7 @@ interface TableProps {
     setEditDevice: (device: Device) => void;
 }
 
-const fallbackData = []
+const fallbackData: never[] = []
 
 
 declare module '@tanstack/react-table' {
@@ -56,7 +55,7 @@ declare module '@tanstack/react-table' {
 }
 
 
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+const fuzzyFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
     // Rank the item
     const itemRank = rankItem(row.getValue(columnId), value)
 
@@ -117,7 +116,7 @@ export default function Table({ setEditDevice, setDeleteDevice }: TableProps) {
                 ),
             }),
         ],
-        [columnHelper, getDeviceIcon],
+        [setDeleteDevice, setEditDevice],
     )
 
     const sorting = useMemo(() => {

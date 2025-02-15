@@ -31,8 +31,11 @@ export default function EditModal({ open, onClose, device }: EditDeviceModalProp
             hddCapacity: data.hddCapacity,
             systemName: data.systemName,
             id: device.id
+        }, {
+            onSuccess: () => {
+                onClose()
+            }
         })
-        onClose()
     }
 
     return (
@@ -45,7 +48,7 @@ export default function EditModal({ open, onClose, device }: EditDeviceModalProp
                     defaultValues: {
                         systemName: device.systemName,
                         deviceType: device.deviceType,
-                        hddCapacity: String(device.hddCapacity),
+                        hddCapacity: device.hddCapacity,
                     },
                 }}
             >

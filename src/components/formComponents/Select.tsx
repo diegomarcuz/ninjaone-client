@@ -1,4 +1,4 @@
-import { Select as SelectMUI, Typography, SelectProps } from '@mui/material';
+import { Select as SelectMUI, Typography, type SelectProps } from '@mui/material';
 import {
     useController,
     type UseControllerProps,

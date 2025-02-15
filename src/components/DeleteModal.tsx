@@ -11,12 +11,15 @@ interface DeleteDeviceModalProps {
 }
 
 export default function DeleteModal({ open, onClose, device }: DeleteDeviceModalProps) {
-   const { mutateAsync } = useDeleteDevice(["devices"])
+  const { mutateAsync } = useDeleteDevice(["devices"])
 
 
   const handleConfirm = async () => {
-    await mutateAsync(device.id)
-    onClose()
+    await mutateAsync(device.id, {
+      onSuccess: () => {
+        onClose()
+      }
+    })
   }
 
   return (
@@ -29,7 +32,7 @@ export default function DeleteModal({ open, onClose, device }: DeleteDeviceModal
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleConfirm} color="error" variant="contained">
+        <Button onClick={async () => await handleConfirm()} color="error" variant="contained">
           Delete
         </Button>
       </DialogActions>

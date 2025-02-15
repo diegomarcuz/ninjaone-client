@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Select, MenuItem, Button, IconButton, Box, Typography, InputLabel, SelectChangeEvent, FormControl } from '@mui/material';
+import { TextField, Select, MenuItem, Button, IconButton, Box, Typography, InputLabel, type SelectChangeEvent, FormControl } from '@mui/material';
 import { Search, Refresh, Add } from "@mui/icons-material"
 import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from "react-router";
@@ -99,7 +99,7 @@ const DeviceList: React.FC = () => {
           </FormControl>
         </Box>
 
-        <IconButton onClick={() => queryClient.invalidateQueries({ queryKey: ["devices"] })}>
+        <IconButton onClick={async () => await queryClient.invalidateQueries({ queryKey: ["devices"] })}>
           <Refresh />
         </IconButton>
       </Box>
