@@ -67,7 +67,18 @@ export default function AddModal({ open, onClose }: AddModalProps) {
                     }}
                 >
 
-                    {!!error && <Typography color="error" variant="h5" textAlign="center">Please, try again later! There is an error!</Typography>}
+                    {!!error && (
+                        <Typography
+                            color="error"
+                            variant="h5"
+                            textAlign="center"
+                            sx={{
+                                marginY: 2
+                            }}
+                        >
+                            Please, try again later! There is an error!
+                        </Typography>
+                    )}
 
                     <Typography>
                         System Name *

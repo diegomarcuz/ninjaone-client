@@ -34,7 +34,18 @@ export default function DeleteModal({ open, onClose, device }: DeleteDeviceModal
         </IconButton>
       </Box>
       <DialogContent>
-        {!!error && <Typography color="error" variant="h5" textAlign="center">Please, try again later! There is an error!</Typography>}
+        {!!error && (
+          <Typography
+            color="error"
+            variant="h5"
+            textAlign="center"
+            sx={{
+              marginY: 2
+            }}
+          >
+            Please, try again later! There is an error!
+          </Typography>
+        )}
         <DialogContentText>
           You are about to delete the device {device.systemName}. This action cannot be undone.
         </DialogContentText>
