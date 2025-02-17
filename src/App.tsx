@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Select, MenuItem, Button, IconButton, Box, Typography, InputLabel, type SelectChangeEvent, FormControl } from '@mui/material';
-import { Search, Refresh, Add } from "@mui/icons-material"
+import { Search, Add } from "@mui/icons-material"
 import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from "react-router";
 
@@ -9,6 +9,8 @@ import { Device, DeviceType, DEVICES_QUERY_KEY, DeviceTypeValuePlusAll } from '.
 import EditModal from './components/EditModal';
 import DeleteModal from './components/DeleteModal';
 import Table from './components/Table';
+
+import RefreshIcon from './assets/refresh.svg'
 
 
 const DeviceList: React.FC = () => {
@@ -100,7 +102,7 @@ const DeviceList: React.FC = () => {
         </Box>
 
         <IconButton onClick={async () => await queryClient.invalidateQueries({ queryKey: [DEVICES_QUERY_KEY] })}>
-          <Refresh />
+        <img src={RefreshIcon} aria-label='Refresh device list' />
         </IconButton>
       </Box>
 
