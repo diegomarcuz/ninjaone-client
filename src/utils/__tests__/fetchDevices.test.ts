@@ -1,4 +1,3 @@
-import { convertSnakeToCamelCase } from '../convertSnakeToCamelCase';
 import { fetchDevices, createDevice, updateDevice, deleteDevice } from '../fetchDevices';
 
 global.fetch = jest.fn();
